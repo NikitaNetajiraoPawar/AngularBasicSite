@@ -1,0 +1,50 @@
+
+
+<form [formGroup]="CustomerModel.formCustomerGroup">
+Customer Name:<input formControlName="CustomerNameControl" [(ngModel)]="CustomerModel.CustomerName" type=text><br>
+Customer Code:<input formControlName="CustomerCodeControl"  [(ngModel)]="CustomerModel.CustomerCode" type=text><br>
+Customer Amount:<input  [ngModelOptions]="{standalone: true}" [(ngModel)]="CustomerModel.CustomerAmount" type=text><br>
+
+<input  [disabled]="!(CustomerModel.formCustomerGroup.valid)"  (click)="Add()" type="button" value="ADD"><br>
+<br>
+<input type="button" value="Send to sever" (click)="PosttoServer()">
+
+
+</form>
+
+
+<div  *ngIf="CustomerModel.formCustomerGroup.dirty" [hidden]="!(hasError('pattern','CustomerCodeControl'))">
+   Customer Code format is not Proper
+</div>
+<div  *ngIf="CustomerModel.formCustomerGroup.dirty" [hidden]="!(hasError('required','CustomerCodeControl'))">
+   Customer Code is required
+</div>
+<div  *ngIf="CustomerModel.formCustomerGroup.dirty" [hidden]="!(hasError('required','CustomerNameControl'))">
+   Customer Name is required
+</div>
+<br><br>
+<hr>
+
+<Grid-UI  
+[grid-columns]="[{'colName':'CustomerCode'},{'colName':'CustomerName'},{'colName':'CustomerAmount'}]"  
+[grid-data]="CustomerModels"
+ (grid-selected)="SelectCustomer($any($event))">
+</Grid-UI>
+
+<hr>
+
+<!-- <table>
+ <tr>
+    <td>CustomerName</td>
+    <td>CustomerCode</td>
+    <td>CustomerAmount</td>
+ </tr>  
+ <tr *ngFor="let customer of CustomerModels">
+<td>{{customer.CustomerName}}</td>
+<td>{{customer.CustomerCode}}</td>
+<td>{{customer.CustomerAmount}}</td>
+ </tr> 
+</table> -->
+
+
+
